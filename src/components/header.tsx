@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { SignInButton, SignOutButton } from "@clerk/nextjs"
 import { MaxWidthWrapper } from './max-width-wrapper'
 import { Button } from './ui/button'
-import { ShinyButton } from './shiny-button'
+import { ShinyButton } from './ui/shiny-button'
 
 export const Header = () => {
   const user = false 
@@ -12,7 +12,7 @@ export const Header = () => {
       <MaxWidthWrapper>
         <div className='h-16 flex items-center justify-between'>
           <Link href={"/"} className='flex z-40 font-semibold text-xl'>
-          Idea<span className='text-emerald-600'>Forge</span>
+          Nex<span className='text-purple-600'>idea</span>
           </Link>
 
           <div className='h-full flex items-center space-x-2 '>
@@ -22,7 +22,7 @@ export const Header = () => {
               </SignOutButton>
               <hr className='border border-b-2 h-7'/>
               <SignInButton>
-                <Button variant={'outline'} className='bg-emerald-600 text-white duration-200'>Dashboard</Button>
+                <Button variant={'outline'} className='bg-purple-600 text-white duration-300'>Dashboard</Button>
               </SignInButton>
             </>
              
