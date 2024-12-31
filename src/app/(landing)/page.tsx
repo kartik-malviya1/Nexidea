@@ -1,24 +1,24 @@
+import Link from "next/link";
 import { Footer } from "@/components/footer";
 import { Heading } from "@/components/heading";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { ShinyButton } from "@/components/ui/shiny-button";
 import { ArrowRight, Check } from "lucide-react";
-import Link from "next/link";
 import SkillSelector from "@/components/skill-selector";
+import { auth } from "@clerk/nextjs/server";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
-export default function Home() {
-  const user = {"name" : "Kartik"} ;
-  // const user = false ;
+export default async function Home() {
+  const {userId} = await auth()
   return (
     <>
       <section className="relative py-24 sm:py-24">
         <MaxWidthWrapper className="text-center space-y-8">
-          {user ? (
+          {userId ? (
             <div className="mx-auto relative text-center flex flex-col items-center gap-10">
               <div className="relative mx-auto flex max-w-2xl flex-col items-center">
                 <Heading>
                   {/* <span>Welcome back, {user}</span> */}
-                  <span>Welcome back, {user.name}</span>
+                  <span>Welcome back, {" "}</span>
                 </Heading>
               </div>
               <p className="text-base/7 text-gray-600 max-w-prose mx-auto text-pretty">

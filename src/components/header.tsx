@@ -4,9 +4,10 @@ import { SignInButton, SignOutButton } from "@clerk/nextjs"
 import { MaxWidthWrapper } from './max-width-wrapper'
 import { Button } from './ui/button'
 import { ShinyButton } from './ui/shiny-button'
+import { auth } from '@clerk/nextjs/server'
 
-export const Header = () => {
-  const user = false 
+export const Header = async() => {
+  const {userId} = await auth() 
   return (
     <nav className='sticky z-[100] h-16 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
@@ -16,7 +17,7 @@ export const Header = () => {
           </Link>
 
           <div className='h-full flex items-center space-x-2 '>
-            {user ? <>
+            {userId ? (<>
               <SignOutButton>
                 <Button variant={'outline'}>Sign Out</Button>
               </SignOutButton>
@@ -24,12 +25,12 @@ export const Header = () => {
               <SignInButton>
                 <Button variant={'outline'} className='bg-purple-600 text-white duration-300'>Dashboard</Button>
               </SignInButton>
-            </>
+            </>)
              
-            : <div className="w-full max-w-40 mx-auto">
+            : (<div className="w-full max-w-40 mx-auto">
                 <ShinyButton href="/sign-up"
                    className="relative z-10 h-10 max-w-32 text-sm left-2 shadow-lg transition-shadow duration-300 hover:shadow-xl">Get Started</ShinyButton>
-            </div>}
+            </div>)}
           </div>
         </div>
       </MaxWidthWrapper>
