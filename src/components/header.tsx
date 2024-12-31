@@ -15,7 +15,7 @@ export const Header = async () => {
           <Link href={"/"} className="flex z-40 font-semibold text-xl">
             Nex<span className="text-purple-600">idea</span>
           </Link>
-
+      
           <div className="h-full flex items-center space-x-2 ">
             {user ? (
               <>
@@ -33,12 +33,23 @@ export const Header = async () => {
                 </Link>
               </>
             ) : (
-              <div className="w-full max-w-40 mx-auto">
+              <div className="w-full mx-auto flex items-center gap-3">
+                <Link href={"/sign-in"} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium hover:text-purple-600">
+                    Pricing
+                </Link>
+                <Link href={"/sign-in"}>
+                  <Button
+                    variant={"ghost"}
+                  >
+                    Sign in
+                  </Button>
+                </Link>
+                <hr className="border border-b-2 h-7" />
                 <ShinyButton
                   href="/sign-up"
-                  className="relative z-10 h-10 max-w-32 text-sm left-2 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                  className="relative z-10 h-10 max-w-24 text-sm left-2 shadow-lg transition-shadow duration-300 hover:shadow-xl"
                 >
-                  Get Started
+                  Sign up
                 </ShinyButton>
               </div>
             )}
