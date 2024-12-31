@@ -3,22 +3,21 @@ import { Footer } from "@/components/footer";
 import { Heading } from "@/components/heading";
 import { ArrowRight, Check } from "lucide-react";
 import SkillSelector from "@/components/skill-selector";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 export default async function Home() {
-  const {userId} = await auth()
+  const user = await currentUser();
   return (
     <>
       <section className="relative py-24 sm:py-24">
         <MaxWidthWrapper className="text-center space-y-8">
-          {userId ? (
+          {user ? (
             <div className="mx-auto relative text-center flex flex-col items-center gap-10">
               <div className="relative mx-auto flex max-w-2xl flex-col items-center">
                 <Heading>
-                  {/* <span>Welcome back, {user}</span> */}
-                  <span>Welcome back, {" "}</span>
+                  <span>Welcome back, {user.username}</span>
                 </Heading>
               </div>
               <p className="text-base/7 text-gray-600 max-w-prose mx-auto text-pretty">
@@ -39,12 +38,14 @@ export default async function Home() {
                 </ShinyButton>
               </div>
               <div className="flex space-x-1">
-              <p className="text-gray-600">Did you have any problems when using this?</p>
-              <Link href={"/help-me"}>
-                <span className="hover:underline text-gray-600 hover:text-purple-600 underline cursor-pointer">
-                  Help me
-                </span>
-              </Link>
+                <p className="text-gray-600">
+                  Did you have any problems when using this?
+                </p>
+                <Link href={"/help-me"}>
+                  <span className="hover:underline text-gray-600 hover:text-purple-600 underline cursor-pointer">
+                    Help me
+                  </span>
+                </Link>
               </div>
             </div>
           ) : (
