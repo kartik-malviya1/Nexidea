@@ -119,7 +119,7 @@ export default async function Home() {
         <div className="flex flex-col gap-4">
           <h2 className="text-center text-base/7 font-semibold">
           Real-World Experiences</h2>
-          <Heading>What are user say</Heading>
+          <Heading>What our user say</Heading>
         </div>
         <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
           {/* first customer */}
