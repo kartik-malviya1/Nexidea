@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
@@ -14,7 +14,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Plan {
+  FREE
+  PRO
+}
+
 model User {
-  id String @id @default(cuid())
+  id         String  @id @default(cuid())
   externalId String? @unique
+  plan       Plan    @default(FREE)
 }
