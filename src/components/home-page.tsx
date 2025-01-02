@@ -17,7 +17,7 @@ export default async function Home() {
             <div className="mx-auto relative text-center flex flex-col items-center gap-10">
               <div className="relative mx-auto flex max-w-2xl flex-col items-center">
                 <Heading>
-                  <span>Welcome back, {user.username}</span>
+                  <span>Welcome back, {user.firstName}</span>
                 </Heading>
               </div>
               <p className="text-base/7 text-gray-600 max-w-prose mx-auto text-pretty">
@@ -87,8 +87,8 @@ export default async function Home() {
               </p>
               <ul className="space-y-2 text-base/7 text-left flex flex-col text-gray-600 sm:items-start">
                 {[
-                  "Roadmaps for Every Idea",
                   "Customizable Tech Stack Selection",
+                  "Roadmaps for Every Idea",
                   "Random Shuffle for Creative Exploration",
                 ].map((item, index) => (
                   <li

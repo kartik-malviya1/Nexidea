@@ -21,9 +21,11 @@ export default function RootLayout({
     <ClerkProvider> 
     <html lang="en">
       <body
-        className={`${inter.className} antialiased bg`}
+        className={`${inter.className} antialiased min-h-[calc(100vh-1px)] flex flex-col`}
         >
-        {children}
+          <main className="relative flex-1 flex flex-col">
+            {children}
+          </main>
       </body>
     </html>
     </ClerkProvider>
