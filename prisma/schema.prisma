@@ -20,7 +20,41 @@ enum Plan {
 }
 
 model User {
-  id         String  @id @default(cuid())
-  externalId String? @unique
-  plan       Plan    @default(FREE)
+  id         String   @id @default(cuid())
+  externalId String?  @unique
+  plan       Plan     @default(FREE)
+  email      String   @unique
+  apiKey     String   @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  ideas    Idea[]
+  roadmaps Roadmap[]
+
+  @@index([email, apiKey])
+}
+
+model Idea {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  stack       String
+  level       String
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Roadmap {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  steps       Json // Stores the steps of the roadmap as JSON
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }
