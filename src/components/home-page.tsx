@@ -1,14 +1,13 @@
-import Link from "next/link";
-import { Heading } from "@/components/heading";
-import { ArrowRight, Check } from "lucide-react";
-import SkillSelector from "@/components/skill-selector";
-import { currentUser } from "@clerk/nextjs/server";
-import { ShinyButton } from "@/components/ui/shiny-button";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-
+import Link from "next/link"
+import { Heading } from "@/components/heading"
+import { ArrowRight, Check } from "lucide-react"
+import SkillSelector from "@/components/skill-selector"
+import { currentUser } from "@clerk/nextjs/server"
+import { ShinyButton } from "@/components/ui/shiny-button"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
 export default async function Home() {
-  const user = await currentUser();
+  const user = await currentUser()
   return (
     <>
       <section className="relative py-24 sm:py-17">
@@ -41,7 +40,7 @@ export default async function Home() {
                 <p className="text-gray-600">
                   Did you have any problems when using this?
                 </p>
-                <Link href={"/help-me"}>
+                <Link href={"#"}>
                   <span className="hover:underline text-gray-600 hover:text-purple-600 underline cursor-pointer">
                     Help me
                   </span>
@@ -113,5 +112,5 @@ export default async function Home() {
         </MaxWidthWrapper>
       </section>
     </>
-  );
+  )
 }
