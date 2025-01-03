@@ -52,7 +52,7 @@ export default async function Home() {
               <div className="relative mx-auto flex max-w-2xl flex-col items-center">
                 <div className="mb-6 flex">
                   <a
-                    href="https://github.com/kartik-malviya1"
+                    href="https://github.com/kartik-malviya1/nexidea/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex"
