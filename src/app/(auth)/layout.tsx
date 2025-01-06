@@ -8,7 +8,7 @@ type Props = {
 
 const Layout = async ({ children }: Props) => {
   const user = await currentUser()
-
+  
   if (user) redirect("/")
 
   return (

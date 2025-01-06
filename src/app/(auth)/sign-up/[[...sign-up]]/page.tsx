@@ -180,7 +180,10 @@ export default function SignUp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full bg-purple-600 hover:bg-purple-700"
+              >
                 Verify Email
               </Button>
             </form>
