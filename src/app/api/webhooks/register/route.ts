@@ -64,11 +64,10 @@ export async function POST(req: Request) {
         console.error("No primary email found");
         return new Response("No primary email found", { status: 400 });
       }
-
       // Create the user in the database
       const newUser = await prisma.user.create({
         data: {
-          clerkId: evt.data.id!,
+          clerkId: evt.data.id,
           email: primaryEmail.email_address,
           firstName: evt.data.first_name || null,
           lastName: evt.data.last_name || null
