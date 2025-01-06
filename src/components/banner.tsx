@@ -4,22 +4,16 @@ import { Button } from "./ui/button"
 
 const Banner = () => {
   const [isVisible, setIsVisible] = useState(true) // Controls whether the banner is rendered
-  const [isClosing, setIsClosing] = useState(false) // Controls the closing animation
 
   const handleClose = () => {
-    setIsClosing(true) // Trigger the closing animation
-    setTimeout(() => setIsVisible(false), 300) // Remove the banner after the animation completes (300ms matches CSS)
+    setIsVisible(false)
   }
 
   return (
     <>
       {isVisible && (
         <div
-          className={`flex items-center p-0.5 bg-purple-200 justify-center transition-all duration-300 ease-in-out ${
-            isClosing
-              ? "opacity-0 translate-y-[-20px]"
-              : "opacity-100 translate-y-0"
-          }`}
+          className={`flex items-center p-0.5 bg-purple-200 justify-center transition-all duration-300 ease-in-out`}
         >
           <div className="w-full items-center">
             <div className="text-center font-medium text-sm text-purple-950">

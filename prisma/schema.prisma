@@ -20,18 +20,17 @@ enum Plan {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  externalId String?  @unique
-  plan       Plan     @default(FREE)
-  email      String   @unique
-  apiKey     String   @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid()) // Auto-generated unique ID
+  clerkId   String   @unique // Ensure `clerkId` is unique
+  firstName String?
+  lastName  String?
+  plan      Plan     @default(FREE) // Default plan
+  email     String   @unique // Unique email address
+  createdAt DateTime @default(now()) // Timestamp when the user was created
+  updatedAt DateTime @updatedAt // Timestamp when the user was last updated
 
-  ideas    Idea[]
-  roadmaps Roadmap[]
-
-  @@index([email, apiKey])
+  ideas    Idea[] // Relation to Idea model
+  roadmaps Roadmap[] // Relation to Roadmap model
 }
 
 model Idea {
