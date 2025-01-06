@@ -1,9 +1,9 @@
 "use client"
-// synchronize auth status to database
 
 import { Heading } from "@/components/heading"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { LucideProps } from "lucide-react"
+
 const Page = () => {
   return (
     <div className="flex flex-1 w-full items-center justify-center px-4">

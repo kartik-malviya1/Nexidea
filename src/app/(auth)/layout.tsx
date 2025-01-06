@@ -1,12 +1,21 @@
-import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
-import { ReactNode } from "react"
+import { currentUser } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
 
-const Layout = ({children}: {children: ReactNode}) =>{
-  return <>
-  <Header />
-  {children}
-  <Footer/>
-  </>
-} 
-export default Layout 
+type Props = {
+  children: React.ReactNode
+}
+
+const Layout = async ({ children }: Props) => {
+  const user = await currentUser()
+
+  if (user) redirect("/")
+
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  )
+}
+export default Layout
