@@ -12,7 +12,7 @@ export default async function Home() {
   }
   return (
     <>
-      <section className="relative py-24 sm:py-6">
+      <section className="relative py-24 sm:py-14">
         <MaxWidthWrapper className="space-y-8">
           <div className="mx-auto relative text-center flex flex-col items-center gap-10">
             <div className="relative mx-auto flex max-w-2xl flex-col items-center">
