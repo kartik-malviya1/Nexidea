@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Loader2, RefreshCw } from "lucide-react"
+import { Loader2, RefreshCw, Lightbulb } from "lucide-react"
 
 interface IdeaDetails {
   title: string
@@ -22,25 +21,18 @@ interface IdeaDetails {
   additionalFeatures: string[]
 }
 
-export default function IdeaDisplay() {
-  const [ideaDetails, setIdeaDetails] = useState<IdeaDetails | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+interface IdeaDisplayProps {
+  ideaDetails: IdeaDetails | null
+  isGenerating: boolean
+  setIsGenerating: (isGenerating: boolean) => void
+}
 
-  const fetchIdea = async () => {
-    setIsLoading(true)
-    const response = await fetch("/api/generate-idea")
-    if (response.ok) {
-      const data = await response.json()
-      setIdeaDetails(data)
-    }
-    setIsLoading(false)
-  }
-
-  useEffect(() => {
-    fetchIdea()
-  }, [])
-
-  if (isLoading) {
+export default function IdeaDisplay({
+  ideaDetails,
+  isGenerating,
+  setIsGenerating,
+}: IdeaDisplayProps) {
+  if (isGenerating) {
     return (
       <Card className="w-full h-full flex items-center justify-center min-h-[600px]">
         <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
@@ -50,9 +42,14 @@ export default function IdeaDisplay() {
 
   if (!ideaDetails) {
     return (
-      <Card className="w-full h-full flex items-center justify-center min-h-[600px]">
-        <p className="text-lg text-gray-500">
-          Failed to load idea. Please try again.
+      <Card className="w-full h-full flex flex-col items-center justify-center min-h-[600px] space-y-6 p-8">
+        <Lightbulb className="w-16 h-16 text-purple-600" />
+        <CardTitle className="text-2xl font-bold text-center text-gray-800">
+          Welcome to the Idea Generator!
+        </CardTitle>
+        <p className="text-center text-gray-600 max-w-md">
+          No ideas generated yet. Fill in your skills and experience level, then
+          click &quot;Generate Idea&quot; to get started.
         </p>
       </Card>
     )
@@ -62,7 +59,7 @@ export default function IdeaDisplay() {
     <Card className="w-full shadow-lg border-t-4 border-t-purple-600">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-gray-800">
-          {ideaDetails.title}
+          {ideaDetails.title || "Untitled Idea"}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -71,7 +68,7 @@ export default function IdeaDisplay() {
             Description
           </h3>
           <p className="text-gray-700 leading-relaxed">
-            {ideaDetails.description}
+            {ideaDetails.description || "No description available."}
           </p>
         </div>
 
@@ -80,15 +77,19 @@ export default function IdeaDisplay() {
             Tech Stack
           </h3>
           <div className="flex flex-wrap gap-2">
-            {ideaDetails.techStack.map((tech, index) => (
-              <Badge
-                key={index}
-                variant="secondary"
-                className="bg-purple-100 text-purple-800"
-              >
-                {tech}
-              </Badge>
-            ))}
+            {ideaDetails.techStack && ideaDetails.techStack.length > 0 ? (
+              ideaDetails.techStack.map((tech, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="bg-purple-100 text-purple-800"
+                >
+                  {tech}
+                </Badge>
+              ))
+            ) : (
+              <p className="text-gray-500">No tech stack specified.</p>
+            )}
           </div>
         </div>
 
@@ -102,17 +103,25 @@ export default function IdeaDisplay() {
             <div>
               <h4 className="font-medium mb-1 text-gray-700">Routes</h4>
               <ul className="list-disc list-inside text-gray-700 space-y-1">
-                {ideaDetails.routes.map((route, index) => (
-                  <li key={index}>{route}</li>
-                ))}
+                {ideaDetails.routes && ideaDetails.routes.length > 0 ? (
+                  ideaDetails.routes.map((route, index) => (
+                    <li key={index}>{route}</li>
+                  ))
+                ) : (
+                  <li>No routes specified.</li>
+                )}
               </ul>
             </div>
             <div>
               <h4 className="font-medium mb-1 text-gray-700">API Routes</h4>
               <ul className="list-disc list-inside text-gray-700 space-y-1">
-                {ideaDetails.apiRoutes.map((route, index) => (
-                  <li key={index}>{route}</li>
-                ))}
+                {ideaDetails.apiRoutes && ideaDetails.apiRoutes.length > 0 ? (
+                  ideaDetails.apiRoutes.map((route, index) => (
+                    <li key={index}>{route}</li>
+                  ))
+                ) : (
+                  <li>No API routes specified.</li>
+                )}
               </ul>
             </div>
           </div>
@@ -123,15 +132,20 @@ export default function IdeaDisplay() {
             Additional Features
           </h3>
           <ul className="list-disc list-inside text-gray-700 space-y-1">
-            {ideaDetails.additionalFeatures.map((feature, index) => (
-              <li key={index}>{feature}</li>
-            ))}
+            {ideaDetails.additionalFeatures &&
+            ideaDetails.additionalFeatures.length > 0 ? (
+              ideaDetails.additionalFeatures.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))
+            ) : (
+              <li>No additional features specified.</li>
+            )}
           </ul>
         </div>
       </CardContent>
       <CardFooter>
         <Button
-          onClick={fetchIdea}
+          onClick={() => setIsGenerating(true)}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2"
         >
           <RefreshCw className="w-4 h-4" />

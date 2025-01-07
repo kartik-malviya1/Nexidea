@@ -75,7 +75,7 @@ export default function SignUp() {
 
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId })
-        router.push("/")
+        router.push("/dashboard")
       }
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2))

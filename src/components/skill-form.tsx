@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -20,25 +19,21 @@ import {
 } from "@/components/ui/card"
 import { Lightbulb, Loader2 } from "lucide-react"
 
-export default function SkillForm() {
-  const [isLoading, setIsLoading] = useState(false)
+interface SkillFormProps {
+  onGenerateIdea: (skills: string, level: string) => Promise<void>
+  isGenerating: boolean
+}
+
+export default function SkillForm({
+  onGenerateIdea,
+  isGenerating,
+}: SkillFormProps) {
   const [skills, setSkills] = useState("")
   const [level, setLevel] = useState("beginner")
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
-    const response = await fetch("/api/generate-idea", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(`{${skills},${level}}`),
-    })
-
-    if (response.ok) {
-      router.refresh()
-      setIsLoading(false)
-    }
+    await onGenerateIdea(skills, level)
   }
 
   return (
@@ -90,19 +85,20 @@ export default function SkillForm() {
           </div>
         </CardContent>
         <CardFooter>
-          {isLoading ? (
-            <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-              <Loader2 className="w-8 h-8 animate-spin" />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-            >
-              Generate Idea
-            </Button>
-          )}
+          <Button
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+            disabled={isGenerating}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              "Generate Idea"
+            )}
+          </Button>
         </CardFooter>
       </form>
     </Card>

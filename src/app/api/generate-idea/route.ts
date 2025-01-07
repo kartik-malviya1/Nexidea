@@ -1,69 +1,65 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export async function GET() {
-  // In a real app, you'd generate this data based on user input and preferences
-  const ideaDetails = {
-    title: "Weather Prediction App with Machine Learning",
-    description: "Build a sophisticated weather application that uses machine learning algorithms to predict local microclimates. This app will provide highly accurate, location-specific weather forecasts by analyzing historical weather data, geographical features, and real-time sensor data.",
-    techStack: ["React", "Node.js", "Python", "TensorFlow", "MongoDB", "Docker"],
-    routes: [
-      "/",
-      "/dashboard",
-      "/forecast/:location",
-      "/historical-data",
-      "/settings"
-    ],
-    apiRoutes: [
-      "/api/weather/current",
-      "/api/weather/forecast",
-      "/api/locations",
-      "/api/ml/train",
-      "/api/user/preferences"
-    ],
-    additionalFeatures: [
-      "User authentication and profiles",
-      "Interactive weather maps",
-      "Push notifications for severe weather alerts",
-      "Integration with IoT weather stations",
-      "Data visualization of historical weather patterns"
-    ]
-  }
+  // Prompt for generating a project idea using AI
+  const prompt = `
+    Generate an idea for a software project based on the following theme:
+    Theme: Weather Prediction App with Machine Learning
+    
+    Include the following details:
+    - Project title
+    - Description
+    - Tech stack (up to 5 technologies)
+    - Example routes and API endpoints
+    - Additional features for enhancement.
+    Make it concise and engaging for a developer audience.
+  `;
 
-  return NextResponse.json(ideaDetails)
+  try {
+    const result = await model.generateContent(prompt);
+    const responseText = await result.response.text();
+    return NextResponse.json({ ideaDetails: responseText });
+  } catch (error) {
+    console.error("Error generating project idea:", error);
+    return NextResponse.json(
+      { error: "Failed to generate project idea. Please try again." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(req: Request) {
-  const { skills, level } = await req.json()
-  
-  // In a real app, you'd use these inputs to generate a tailored idea
-  // For now, we'll return the same data as the GET request
-  const ideaDetails = {
-    title: `${level.charAt(0).toUpperCase() + level.slice(1)} Weather Prediction App`,
-    description: `Build a ${level}-level weather application using ${skills} that predicts local microclimates using machine learning techniques.`,
-    techStack: skills.split(',').map((skill: string) => skill.trim()),
-    routes: [
-      "/",
-      "/dashboard",
-      "/forecast/:location",
-      "/historical-data",
-      "/settings"
-    ],
-    apiRoutes: [
-      "/api/weather/current",
-      "/api/weather/forecast",
-      "/api/locations",
-      "/api/ml/train",
-      "/api/user/preferences"
-    ],
-    additionalFeatures: [
-      "User authentication and profiles",
-      "Interactive weather maps",
-      "Push notifications for severe weather alerts",
-      "Integration with IoT weather stations",
-      "Data visualization of historical weather patterns"
-    ]
-  }
-  
-  return NextResponse.json(ideaDetails)
-}
+  const { skills, level } = await req.json();
 
+  // Prompt for generating tailored project details using AI
+  const prompt = `
+    Generate a project idea tailored to the following developer inputs:
+    - Developer skills: ${skills}
+    - Proficiency level: ${level}
+
+    Include the following details:
+    - Project title
+    - Description
+    - Tech stack (based on the skills provided)
+    - Example routes and API endpoints
+    - Additional features for enhancement.
+    Make it concise and engaging for a developer audience.
+  `;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const responseText = await result.response.text();
+    
+    return NextResponse.json({ ideaDetails: responseText });
+  } catch (error) {
+    console.error("Error generating project details:", error);
+    return NextResponse.json(
+      { error: "Failed to generate project details. Please try again." },
+      { status: 500 }
+    );
+  }
+}
