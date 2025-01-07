@@ -1,50 +1,34 @@
-import Link from "next/link"
 import { Heading } from "@/components/heading"
-import { ArrowRight, Check } from "lucide-react"
-import SkillSelector from "@/components/skill-selector"
-import { currentUser } from "@clerk/nextjs/server"
-import { ShinyButton } from "@/components/ui/shiny-button"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { ShinyButton } from "@/components/ui/shiny-button"
+import { currentUser } from "@clerk/nextjs/server"
+import { ArrowRight, Check } from "lucide-react"
+import IdeaDisplay from "./ideaDisplay"
+import SkillForm from "./skill-form"
 
 export default async function Home() {
   const user = await currentUser()
   return (
     <>
-      <section className="relative py-24 sm:py-17">
-        <MaxWidthWrapper className="text-center space-y-8">
+      <section className="relative py-24 sm:py-6">
+        <MaxWidthWrapper className="space-y-8">
           {user ? (
-            <div className="mx-auto relative text-center flex flex-col items-center gap-10">
-              <div className="relative mx-auto flex max-w-2xl flex-col items-center">
-                <Heading>
-                  <span>Welcome back, {user.firstName}</span>
-                </Heading>
-              </div>
-              <p className="text-base/7 text-gray-600 max-w-prose mx-auto text-pretty">
-                Struggling to find project ideas? Choose your{" "}
-                <span className="font-semibold text-gray-700">
-                  {" "}
-                  stack, pick your level, and let Nexidea craft ideas that match
-                  your skills and expertise.
-                </span>
-              </p>
-              <SkillSelector />
-              <div className="w-full max-w-[12rem] mx-auto">
-                <ShinyButton
-                  href="#"
-                  className="relative z-10 h-14 w-full text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
-                >
-                  Generating Idea
-                </ShinyButton>
-              </div>
-              <div className="flex space-x-1">
-                <p className="text-gray-600">
-                  Did you have any problems when using this?
+            <div className="container mx-auto p-4 flex flex-col">
+              <header className="py-6 mb-8 text-purple-800">
+                <h1 className="text-4xl font-bold text-center text-gray-800">
+                  Idea Generator
+                </h1>
+                <p className="text-center text-purple-600 mt-2">
+                  Transform your skills into innovative project ideas
                 </p>
-                <Link href={"#"}>
-                  <span className="hover:underline text-gray-600 hover:text-purple-600 underline cursor-pointer">
-                    Help me
-                  </span>
-                </Link>
+              </header>
+              <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-1">
+                  <SkillForm />
+                </div>
+                <div className="lg:col-span-2">
+                  <IdeaDisplay />
+                </div>
               </div>
             </div>
           ) : (
@@ -52,7 +36,7 @@ export default async function Home() {
               <div className="relative mx-auto flex max-w-2xl flex-col items-center">
                 <div className="mb-6 flex">
                   <a
-                    href="https://github.com/kartik-malviya1/nexidea/"
+                    href="https://github.com/kartik-malviya1/nexidea"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex"

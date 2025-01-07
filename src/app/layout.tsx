@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Nexidea",
-  description: "",
+  description: "Generate project ideas based on your skills and experience",
 }
 
 export default function RootLayout({

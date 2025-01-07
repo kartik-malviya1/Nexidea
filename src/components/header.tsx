@@ -1,11 +1,10 @@
 import React from "react"
 import Link from "next/link"
-import { SignOutButton } from "@clerk/nextjs"
+import { SignOutButton, UserButton } from "@clerk/nextjs"
 import { MaxWidthWrapper } from "./max-width-wrapper"
 import { Button } from "./ui/button"
 import { ShinyButton } from "./ui/shiny-button"
 import { currentUser } from "@clerk/nextjs/server"
-import { ArrowRight } from "lucide-react"
 
 export const Header = async () => {
   const user = await currentUser()
@@ -24,18 +23,7 @@ export const Header = async () => {
                   <Button variant={"outline"}>Sign Out</Button>
                 </SignOutButton>
                 <hr className="border border-b-2 h-7" />
-                <Link
-                  href={"/dashboard"}
-                  className="group relative flex transform"
-                >
-                  <Button
-                    variant={"default"}
-                    className="bg-purple-600 hover:bg-purple-700 text-white duration-100"
-                  >
-                    Dashboard
-                    <ArrowRight className="size-4 shrink-0 text-white transition-transform duration-300 ease-in-out group-hover:translate-x-[2px]" />
-                  </Button>
-                </Link>
+                <UserButton />
               </>
             ) : (
               <div className="w-full mx-auto flex items-center gap-3">
