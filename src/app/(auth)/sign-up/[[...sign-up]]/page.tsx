@@ -45,13 +45,18 @@ export default function SignUp() {
     }
 
     try {
-      await signUp.create({
-        emailAddress,
-        password,
-      })
+      // Make sure CAPTCHA is rendered before calling signUp.create
+      const captchaElement = document.getElementById("clerk-captcha")
+      if (captchaElement) {
+        await signUp.create({
+          emailAddress,
+          password,
+        })
+      } else {
+        setError("CAPTCHA widget is not rendered.")
+      }
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-
       setPendingVerification(true)
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2))
