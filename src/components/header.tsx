@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { SignOutButton, UserButton } from "@clerk/nextjs"
+import { SignOutButton } from "@clerk/nextjs"
 import { MaxWidthWrapper } from "./max-width-wrapper"
 import { Button } from "./ui/button"
 import { ShinyButton } from "./ui/shiny-button"
@@ -23,7 +23,6 @@ export const Header = async () => {
                   <Button variant={"outline"}>Sign Out</Button>
                 </SignOutButton>
                 <hr className="border border-b-2 h-7" />
-                <UserButton />
               </>
             ) : (
               <div className="w-full mx-auto flex items-center gap-3">
