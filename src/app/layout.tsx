@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" className="scroll-smooth">
         <body
-          className={`${inter.className} antialiased min-h-[calc(100vh-1px)] flex flex-col scroll-smooth`}
+          className={`${inter.className} antialiased min-h-[calc(100vh-1px)] flex flex-col`}
         >
           <main className="relative flex-1 flex flex-col">{children}</main>
         </body>

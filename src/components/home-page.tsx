@@ -12,7 +12,7 @@ export default async function Home() {
   }
   return (
     <>
-      <section className="relative py-24 sm:py-14">
+      <section className="relative py-24 sm:py-18">
         <MaxWidthWrapper className="space-y-8">
           <div className="mx-auto relative text-center flex flex-col items-center gap-10">
             <div className="relative mx-auto flex max-w-2xl flex-col items-center">
@@ -52,9 +52,9 @@ export default async function Home() {
             </p>
             <ul className="space-y-2 text-base/7 text-left flex flex-col text-gray-600 sm:items-start">
               {[
-                "Customizable Tech Stack Selection",
-                "Roadmaps for Every Idea",
-                "Random Shuffle for Creative Exploration",
+                "Tailored to Your Tech Skills",
+                "Resume-Ready Project ideas",
+                "Step-by-Step Project Roadmaps",
               ].map((item, index) => (
                 <li key={index} className="flex gap-1.5 items-center text-left">
                   <Check className="size-5 shrink-0 text-purple-600" />
