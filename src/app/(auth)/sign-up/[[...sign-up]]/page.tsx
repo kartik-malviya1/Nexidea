@@ -180,6 +180,7 @@ export default function SignUp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+              <div id="clerk-captcha"></div>
               <Button
                 type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700"
