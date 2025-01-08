@@ -4,7 +4,6 @@ import { useState } from "react"
 import SkillForm from "@/components/skill-form"
 import IdeaDisplay from "./(components)/ideaDisplay"
 import { IdeaDetails } from "@/types/index"
-import { Footer } from "@/components/footer"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 import { toast } from "sonner"
 
@@ -26,8 +25,8 @@ export default function Dashboard() {
       })
 
       const data = await response.json()
-      console.log("API Response Status:", response.status)
-      console.log("API Response Data:", data)
+      // console.log("API Response Status:", response.status)
+      // console.log("API Response Data:", data)
 
       if (response.ok) {
         setIdeaDetails(data)
@@ -60,13 +59,14 @@ export default function Dashboard() {
                 ideaDetails={ideaDetails}
                 isGenerating={isGenerating}
                 setIsGenerating={setIsGenerating}
-                onRegenerate={() => handleGenerateIdea(currentSkills, currentLevel)}
+                onRegenerate={() =>
+                  handleGenerateIdea(currentSkills, currentLevel)
+                }
               />
             </div>
           </div>
         </MaxWidthWrapper>
       </div>
-      <Footer />
     </>
   )
 }

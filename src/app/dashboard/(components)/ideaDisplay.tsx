@@ -25,7 +25,7 @@ export default function IdeaDisplay({
   isGenerating,
   onRegenerate,
 }: IdeaDisplayProps) {
-  console.log("Received ideaDetails:", ideaDetails);
+  // console.log("Received ideaDetails:", ideaDetails);
 
   if (isGenerating) {
     return (
