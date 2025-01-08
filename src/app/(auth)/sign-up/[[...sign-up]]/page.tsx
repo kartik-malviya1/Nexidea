@@ -45,16 +45,10 @@ export default function SignUp() {
     }
 
     try {
-      // Make sure CAPTCHA is rendered before calling signUp.create
-      const captchaElement = document.getElementById("clerk-captcha")
-      if (captchaElement) {
-        await signUp.create({
-          emailAddress,
-          password,
-        })
-      } else {
-        setError("CAPTCHA widget is not rendered.")
-      }
+      await signUp.create({
+        emailAddress,
+        password,
+      })
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
       setPendingVerification(true)
@@ -69,7 +63,7 @@ export default function SignUp() {
     if (!isLoaded) {
       return
     }
-    router.push("/welcome")
+
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
@@ -139,6 +133,7 @@ export default function SignUp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+              <div id="clerk-captcha" className="mb-4"></div>
               <Button
                 type="submit"
                 className="w-full bg-purple-700 hover:bg-purple-800"
@@ -185,7 +180,6 @@ export default function SignUp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <div id="clerk-captcha"></div>
               <Button
                 type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700"
