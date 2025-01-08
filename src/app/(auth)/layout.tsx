@@ -1,4 +1,3 @@
-import { Header } from "@/components/header"
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 
