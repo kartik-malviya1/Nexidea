@@ -33,7 +33,9 @@ export default function SkillForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await onGenerateIdea(skills, level)
+    if (skills && level) {
+      await onGenerateIdea(skills, level)
+    }
   }
 
   return (

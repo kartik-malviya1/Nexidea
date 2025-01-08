@@ -1,41 +1,39 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Loader2, RefreshCw, Lightbulb } from "lucide-react"
-
-interface IdeaDetails {
-  title: string
-  description: string
-  techStack: string[]
-  routes: string[]
-  apiRoutes: string[]
-  additionalFeatures: string[]
-}
+import { IdeaDetails } from "@/types/index"
+import { Lightbulb, Loader2, RefreshCw } from "lucide-react"
 
 interface IdeaDisplayProps {
   ideaDetails: IdeaDetails | null
   isGenerating: boolean
   setIsGenerating: (isGenerating: boolean) => void
+  onRegenerate: () => Promise<void>
 }
 
 export default function IdeaDisplay({
   ideaDetails,
   isGenerating,
-  setIsGenerating,
+  onRegenerate,
 }: IdeaDisplayProps) {
+  console.log("Received ideaDetails:", ideaDetails);
+
   if (isGenerating) {
     return (
       <Card className="w-full h-full flex items-center justify-center min-h-[600px]">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+          <p className="text-gray-600">Generating your project idea...</p>
+        </div>
       </Card>
     )
   }
@@ -53,6 +51,19 @@ export default function IdeaDisplay({
         </p>
       </Card>
     )
+  }
+
+  const techStack = ideaDetails.techStack || [];
+  const routes = ideaDetails.routes || [];
+  const apiRoutes = ideaDetails.apiRoutes || [];
+  const additionalFeatures = ideaDetails.additionalFeatures || [];
+
+  const handleRegenerate = async () => {
+    try {
+      await onRegenerate()
+    } catch (error) {
+      console.error("Error regenerating idea:", error)
+    }
   }
 
   return (
@@ -77,8 +88,8 @@ export default function IdeaDisplay({
             Tech Stack
           </h3>
           <div className="flex flex-wrap gap-2">
-            {ideaDetails.techStack && ideaDetails.techStack.length > 0 ? (
-              ideaDetails.techStack.map((tech, index) => (
+            {techStack.length > 0 ? (
+              techStack.map((tech, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
@@ -103,8 +114,8 @@ export default function IdeaDisplay({
             <div>
               <h4 className="font-medium mb-1 text-gray-700">Routes</h4>
               <ul className="list-disc list-inside text-gray-700 space-y-1">
-                {ideaDetails.routes && ideaDetails.routes.length > 0 ? (
-                  ideaDetails.routes.map((route, index) => (
+                {routes.length > 0 ? (
+                  routes.map((route, index) => (
                     <li key={index}>{route}</li>
                   ))
                 ) : (
@@ -115,8 +126,8 @@ export default function IdeaDisplay({
             <div>
               <h4 className="font-medium mb-1 text-gray-700">API Routes</h4>
               <ul className="list-disc list-inside text-gray-700 space-y-1">
-                {ideaDetails.apiRoutes && ideaDetails.apiRoutes.length > 0 ? (
-                  ideaDetails.apiRoutes.map((route, index) => (
+                {apiRoutes.length > 0 ? (
+                  apiRoutes.map((route, index) => (
                     <li key={index}>{route}</li>
                   ))
                 ) : (
@@ -132,9 +143,8 @@ export default function IdeaDisplay({
             Additional Features
           </h3>
           <ul className="list-disc list-inside text-gray-700 space-y-1">
-            {ideaDetails.additionalFeatures &&
-            ideaDetails.additionalFeatures.length > 0 ? (
-              ideaDetails.additionalFeatures.map((feature, index) => (
+            {additionalFeatures.length > 0 ? (
+              additionalFeatures.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))
             ) : (
@@ -145,11 +155,12 @@ export default function IdeaDisplay({
       </CardContent>
       <CardFooter>
         <Button
-          onClick={() => setIsGenerating(true)}
+          onClick={handleRegenerate}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2"
+          disabled={isGenerating}
         >
-          <RefreshCw className="w-4 h-4" />
-          Generate New Idea
+          <RefreshCw className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
+          {isGenerating ? 'Generating New Idea...' : 'Generate New Idea'}
         </Button>
       </CardFooter>
     </Card>

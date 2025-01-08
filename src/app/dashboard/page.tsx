@@ -2,16 +2,21 @@
 
 import { useState } from "react"
 import SkillForm from "@/components/skill-form"
-import IdeaDisplay from "@/components/ideaDisplay"
+import IdeaDisplay from "./(components)/ideaDisplay"
 import { IdeaDetails } from "@/types/index"
 import { Footer } from "@/components/footer"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { toast } from "sonner"
 
 export default function Dashboard() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [ideaDetails, setIdeaDetails] = useState<IdeaDetails | null>(null)
+  const [currentSkills, setCurrentSkills] = useState("")
+  const [currentLevel, setCurrentLevel] = useState("")
 
   const handleGenerateIdea = async (skills: string, level: string) => {
+    setCurrentSkills(skills)
+    setCurrentLevel(level)
     setIsGenerating(true)
     try {
       const response = await fetch("/api/generate-idea", {
@@ -20,15 +25,20 @@ export default function Dashboard() {
         body: JSON.stringify({ skills, level }),
       })
 
+      const data = await response.json()
+      console.log("API Response Status:", response.status)
+      console.log("API Response Data:", data)
+
       if (response.ok) {
-        const data = await response.json()
         setIdeaDetails(data)
+        toast.success("Successfully generated new idea!")
       } else {
-        throw new Error("Failed to generate idea.")
+        toast.error(data.error || "Failed to generate idea")
       }
     } catch (error) {
       console.error("Error generating idea:", error)
       setIdeaDetails(null)
+      toast.error("Failed to generate idea. Please try again.")
     } finally {
       setIsGenerating(false)
     }
@@ -36,7 +46,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="container mx-auto px-4 mt-10 min-h-screen flex flex-col ">
+      <div className="container mx-auto px-4 mt-10 min-h-screen flex flex-col">
         <MaxWidthWrapper>
           <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
@@ -50,6 +60,7 @@ export default function Dashboard() {
                 ideaDetails={ideaDetails}
                 isGenerating={isGenerating}
                 setIsGenerating={setIsGenerating}
+                onRegenerate={() => handleGenerateIdea(currentSkills, currentLevel)}
               />
             </div>
           </div>
