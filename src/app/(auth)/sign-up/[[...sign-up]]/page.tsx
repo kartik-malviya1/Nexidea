@@ -19,11 +19,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Eye, EyeOff } from "lucide-react"
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp"
 
-// type Props = {
-//   code: string
-//   setCode: React.Dispatch<React.SetStateAction<string>>
-// }
-
 export default function SignUp() {
   const { isLoaded, signUp, setActive } = useSignUp()
   const [emailAddress, setEmailAddress] = useState("")
@@ -133,7 +128,7 @@ export default function SignUp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <div id="clerk-captcha" className="mb-4"></div>
+              <div id="clerk-captcha" className="mb-4 bg-slate-100"></div>
               <Button
                 type="submit"
                 className="w-full bg-purple-700 hover:bg-purple-800"
